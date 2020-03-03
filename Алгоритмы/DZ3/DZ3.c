@@ -3,7 +3,7 @@
 #include "time.h"
 
 
-#define COUNT 10
+#define COUNT 100
 
 void swap(int *a, int *b);
 void printa(int *array, int count, char text[]);
@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]){
 	int *array = (int*)malloc(sizeof(count));
 
 	for (int i = 0; i < count; ++i){
-		array[i] = rand() % 100;
+		array[i] = rand() % COUNT;
 		//printf("%d ", array[i]);
 	}
 	printa(array, count, "array");
@@ -31,6 +31,7 @@ int main(int argc, char const *argv[]){
 	int tic3 = shakesort(array, count);
 	printf("\ntic1 = %d\ntic2 = %d\ntic3 = %d\n", tic1, tic2, tic3);
 	binsearch(array, count, 10);
+	free(array);
 	return 0;
 }
 
@@ -56,8 +57,9 @@ int  bobblesort(int *array, int count){
 		sortarray[i] = array[i];
 	}
 
-	for (int i = 0; i < count - 1; ++i){
-		for (int j = 0; j < count - 1 - i; ++j){
+	for (int i = 0; i < count; ++i){
+		for (int j = 0; j < count - 1; ++j){
+			tic++;
 			if (sortarray[j] > sortarray[j + 1]){
 				swap(&sortarray[j], &sortarray[j + 1]);
 				tic++;
@@ -80,6 +82,7 @@ int bobblesortnew(int *array, int count){
 	for (int i = 0; i < count - 1; ++i){
 		swapped = 0;
 		for (int j = 0; j < count - 1 - i; ++j){
+			tic++;
 			if (sortarray[j] > sortarray[j + 1]){
 				swap(&sortarray[j], &sortarray[j + 1]);
 				swapped = 1;
@@ -107,17 +110,19 @@ int shakesort(int *array, int count){
 	}
 
 	while(left <= right){
-		for (int i = left; i <= right; ++i){
-			if(sortarray[i - 1] > sortarray[i]){
-				swap(&sortarray[i - 1], &sortarray[i]);
+		for (int i = left; i < right; ++i){
+			tic++;
+			if(sortarray[i] > sortarray[i + 1]){
+				swap(&sortarray[i], &sortarray[i + 1]);
 				tic++;
 			}
 		}
 		right--;
 
-		for (int i = right; i >= left; i--){
+		for (int i = right; i > left; i--){
+			tic++;
 			if(sortarray[i - 1] > sortarray[i]){
-				swap(&sortarray[i - 1], &sortarray[i]);
+				swap(&sortarray[i], &sortarray[i - 1]);
 				tic++;
 			}
 		}
